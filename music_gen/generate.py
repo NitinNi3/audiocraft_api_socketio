@@ -17,11 +17,10 @@ class ChoiraGenerate:
         self.model.set_custom_progress_callback(self.progress_callback)
         res = self.model.generate([prompt],progress=True)
         print(res)
-        print(res[0])
-        print(res[1])
+        tensor = res.cpu().squeeze(0)
+        tensor = tensor / torch.max(torch.abs(tensor))
         sample_rate = 32000  # Replace with your actual sample rate
-        audio_tensor = torch.rand(1, sample_rate * duration)  # 5 seconds of mono audio
-        torchaudio.save(f"audios/{self.generate_filename()}", audio_tensor, sample_rate)
+        torchaudio.save(f"audios/{self.generate_filename()}", tensor, sample_rate)
         return res
     
     def progress_callback(self,generated,to_generate):
