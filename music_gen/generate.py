@@ -17,10 +17,10 @@ class ChoiraGenerate:
         self.model.set_custom_progress_callback(self.progress_callback)
         res = self.model.generate([prompt],progress=True)
         print(res)
-        tensor = res.cpu().squeeze(0)
+        tensor = res.squeeze(0)
         tensor = tensor / torch.max(torch.abs(tensor))
         sample_rate = 32000  # Replace with your actual sample rate
-        torchaudio.save(f"audios/{self.generate_filename()}", tensor, sample_rate)
+        torchaudio.save(f"audios/{self.generate_filename}", tensor, sample_rate)
         return res
     
     def progress_callback(self,generated,to_generate):
@@ -31,6 +31,6 @@ class ChoiraGenerate:
         self.socketio.emit('music-progress', {'progress':percentage},to=self.socket_id)
 
 
-    def generate_filename(extension="wav"):
+    def generate_filename():
         timestamp = int(time.time())
-        return f"choira_gen_{timestamp}.{extension}"
+        return f"choira_gen_{timestamp}.wav"
