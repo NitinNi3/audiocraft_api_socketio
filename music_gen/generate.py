@@ -12,6 +12,7 @@ class ChoiraGenerate:
         
 
     def generate_music_large(self,prompt,duration,user_socket_id):
+        print(f"audios/{self.generate_filename}")
         self.socket_id = user_socket_id
         self.model.set_generation_params(duration)
         self.model.set_custom_progress_callback(self.progress_callback)
