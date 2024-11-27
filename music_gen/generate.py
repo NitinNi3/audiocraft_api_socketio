@@ -11,9 +11,11 @@ class ChoiraGenerate:
     def generate_music_large(self,prompt,duration,user_socket_id):
         self.model.set_generation_params(duration)
         self.model.set_custom_progress_callback(self.progress_callback)
-        self.model.generate([prompt],progress=True)
+        res = self.model.generate([prompt],progress=True)
+        print(res)
+        print(type (res))
         self.socket_id = user_socket_id
-        return 
+        return res
     
     def progress_callback(self,generated,to_generate):
         # hit socket event

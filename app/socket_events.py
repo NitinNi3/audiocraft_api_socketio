@@ -18,5 +18,5 @@ def generate_music_large(data):
 
     # prompt enhnace here
 
-    choira_generate.generate_music_large(data['prompt'],data['duration'],request.sid)
-    emit('response', {'message': data})
+    _music = choira_generate.generate_music_large(data['prompt'],data['duration'],request.sid)
+    emit('music_generated', {'message': data})
