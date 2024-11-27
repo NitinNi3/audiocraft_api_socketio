@@ -26,7 +26,7 @@ class ChoiraGenerate:
     def progress_callback(self,generated,to_generate):
         # hit socket event
         percentage = (generated/to_generate)*100
-        print(f"Percentage:{percentage}%")
+        print(f"Percentage:{round(percentage)}%")
 
         self.socketio.emit('music-progress', {'progress':percentage},to=self.socket_id)
 
