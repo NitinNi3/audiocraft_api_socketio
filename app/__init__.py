@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_socketio import SocketIO
 from music_gen.generate import ChoiraGenerate
+from flask_cors import CORS
 # Initialize Flask and Socket.IO
 socketio = SocketIO(cors_allowed_origins="*")
 
@@ -10,6 +11,8 @@ choira_generate = ChoiraGenerate(socketio)
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'your-secret-key'
+    CORS(app)
+
 
     # Register routes
     from app.routes import main as main_blueprint
