@@ -1,3 +1,4 @@
 audios/*
 .env
 test.py
+history.json
