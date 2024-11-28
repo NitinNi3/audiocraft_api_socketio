@@ -5,6 +5,7 @@ import time
 from openai import OpenAI 
 from dotenv import load_dotenv
 import os
+import json
 load_dotenv()
 
 
@@ -15,13 +16,14 @@ class ChoiraGenerate:
         self.socket_id = 0
         
 
-    def generate_music_large(self,prompt,duration,user_socket_id):
+    def generate_music_large(self,original_prompt,prompt,duration,user_socket_id):
         print("GENERATION STARTED.......")
         self.socket_id = user_socket_id
         self.model.set_generation_params(duration=duration)
         self.model.set_custom_progress_callback(self.progress_callback)
 
         enhanced_prompt = self.enhance_the_prompt(prompt)
+        print("Enhanced prompt :",enhanced_prompt)
 
         res = self.model.generate([enhanced_prompt],progress=True)
         tensor = res.cpu().squeeze(0)
@@ -29,7 +31,11 @@ class ChoiraGenerate:
         sample_rate = 32000  # Replace with your actual sample rate
         file_name = self.generate_filename()
         torchaudio.save(f"audios/{file_name}", tensor, sample_rate)
-        print(f"GENERATION FINISHED !. File saved as {file_name}")
+        new_entry = {
+            "user_prompt":original_prompt,"filename":file_name,"enchanted_prompt":enhanced_prompt
+        }
+        self.save_history(new_entry)
+        print(f"GENERATION FINISHED :) File saved as {file_name}")
 
         return file_name
     
@@ -53,3 +59,19 @@ class ChoiraGenerate:
         ]
         )
         return completion.choices[0].message.content
+    
+    def save_history(self,new_entry):
+        try:
+            with open("history.json", "r") as file:
+                data = json.load(file)  # Load existing JSON content
+        except FileNotFoundError:
+            # Initialize data if the file doesn't exist
+            data = {"generations": []}
+
+        # Add the new entry to the 'generations' array
+        data["generations"].append(new_entry)
+
+        with open("history.json", "w") as file:
+            json.dump(data, file, indent=4)
+
+        print("New entry added successfully!")

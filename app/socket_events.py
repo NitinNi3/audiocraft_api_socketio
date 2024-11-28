@@ -15,15 +15,8 @@ def handle_disconnect():
 @socketio.on('generate-music-large')
 def generate_music_large(data):
     print(f"Received message: {data}")
-
-    # prompt enhnace here
-
-    detailed_prompt = data['prompt']
-
-    print("AI Detailed prompt : ",detailed_prompt)
-
-
-    enhanced_prompt  = f"A crisp and clear sounding {detailed_prompt}"
-
-    file_name = choira_generate.generate_music_large(enhanced_prompt,data['duration'],request.sid)
+    user_prompt = data['prompt']
+    print("User prompt : ",user_prompt)
+    crisp_prompt  = f"A crisp and clear sounding {user_prompt}"
+    file_name = choira_generate.generate_music_large(user_prompt,crisp_prompt,data['duration'],request.sid)
     emit('music_generated', {'file_name': file_name})
