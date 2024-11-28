@@ -3,7 +3,7 @@ import torch
 import torchaudio
 import time
 from openai import OpenAI 
-
+import os
 
 
 class ChoiraGenerate:
@@ -42,7 +42,7 @@ class ChoiraGenerate:
 
     def enhance_the_prompt(self,user_prompt):
         MODEL="gpt-4o-mini"
-        client = OpenAI(api_key=process.env.o_key)
+        client = OpenAI(api_key=os.environ.get("o_key"))
         completion = client.chat.completions.create(
         model=MODEL,
         messages=[
