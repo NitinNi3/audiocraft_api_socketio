@@ -22,7 +22,7 @@ class ChoiraGenerate:
         sample_rate = 32000  # Replace with your actual sample rate
         file_name = self.generate_filename()
         torchaudio.save(f"audios/{file_name}", tensor, sample_rate)
-        print("GENERATION FINISHED !. File saved as {file_name}")
+        print(f"GENERATION FINISHED !. File saved as {file_name}")
 
         return file_name
     
