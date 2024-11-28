@@ -7,7 +7,7 @@ import time
 class ChoiraGenerate:
     def __init__(self,socketio) -> None:
         self.socketio = socketio
-        self.model = musicgen.MusicGen.get_pretrained('medium', device='cuda')
+        self.model = musicgen.MusicGen.get_pretrained('large', device='cuda')
         self.socket_id = 0
         
 
