@@ -12,7 +12,6 @@ class ChoiraGenerate:
         
 
     def generate_music_large(self,prompt,duration,user_socket_id):
-        print(f"audios/{self.generate_filename()}")
         self.socket_id = user_socket_id
         self.model.set_generation_params(duration)
         self.model.set_custom_progress_callback(self.progress_callback)
@@ -20,8 +19,9 @@ class ChoiraGenerate:
         tensor = res.cpu().squeeze(0)
         tensor = tensor / torch.max(torch.abs(tensor))
         sample_rate = 32000  # Replace with your actual sample rate
-        torchaudio.save(f"audios/{self.generate_filename()}", tensor, sample_rate)
-        return res
+        file_name = self.generate_filename()
+        torchaudio.save(f"audios/{file_name}", tensor, sample_rate)
+        return file_name
     
     def progress_callback(self,generated,to_generate):
         # hit socket event
