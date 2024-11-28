@@ -18,5 +18,12 @@ def generate_music_large(data):
 
     # prompt enhnace here
 
-    file_name = choira_generate.generate_music_large(data['prompt'],data['duration'],request.sid)
+    detailed_prompt = data['prompt']
+
+    print("AI Detailed prompt : ",detailed_prompt)
+
+
+    enhanced_prompt  = f"A crisp and clear sounding {detailed_prompt}"
+
+    file_name = choira_generate.generate_music_large(enhanced_prompt,data['duration'],request.sid)
     emit('music_generated', {'file_name': file_name})
