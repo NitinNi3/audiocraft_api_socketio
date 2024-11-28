@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 from app import create_app, socketio
-from app.socket_events import *  # Import socket event handlers
+from app.socket_events import *
 
 app = create_app()
 
