@@ -17,7 +17,7 @@ class ChoiraGenerate:
         self.model.set_generation_params(duration)
         self.model.set_custom_progress_callback(self.progress_callback)
         res = self.model.generate([prompt],progress=True)
-        tensor = res.squeeze(0)
+        tensor = res.cpu().squeeze(0)
         tensor = tensor / torch.max(torch.abs(tensor))
         sample_rate = 32000  # Replace with your actual sample rate
         torchaudio.save(f"audios/{self.generate_filename()}", tensor, sample_rate)
