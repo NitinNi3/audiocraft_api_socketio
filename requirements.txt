@@ -3,6 +3,5 @@ Flask-SocketIO==5.3.3
 python-socketio==5.8.0
 torchaudio
 flask-cors
-gunicorn
-gevent
+openai
 

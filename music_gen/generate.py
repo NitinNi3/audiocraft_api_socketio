@@ -2,6 +2,8 @@ from audiocraft.models import musicgen
 import torch
 import torchaudio
 import time
+from openai import OpenAI 
+
 
 
 class ChoiraGenerate:
@@ -16,7 +18,10 @@ class ChoiraGenerate:
         self.socket_id = user_socket_id
         self.model.set_generation_params(duration=duration)
         self.model.set_custom_progress_callback(self.progress_callback)
-        res = self.model.generate([prompt],progress=True)
+
+        enhanced_prompt = self.enhance_the_prompt(prompt)
+
+        res = self.model.generate([enhanced_prompt],progress=True)
         tensor = res.cpu().squeeze(0)
         tensor = tensor / torch.max(torch.abs(tensor))
         sample_rate = 32000  # Replace with your actual sample rate
@@ -34,3 +39,15 @@ class ChoiraGenerate:
     def generate_filename(self):
         timestamp = int(time.time())
         return f"choira_gen_{timestamp}.wav"
+
+    def enhance_the_prompt(self,user_prompt):
+        MODEL="gpt-4o-mini"
+        client = OpenAI(api_key=process.env.o_key)
+        completion = client.chat.completions.create(
+        model=MODEL,
+        messages=[
+            {"role": "system", "content": "You are a prompt creator for text to music models but prompt should be less than 200 characters. enhance the provide prompt by adding more detailed into it and give the one enhance prompt only does not include anything else"},
+            {"role": "user", "content": user_prompt}  # <-- This is the user message for which the model will generate a response
+        ]
+        )
+        return completion.choices[0].message.content
