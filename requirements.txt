@@ -5,6 +5,3 @@ torchaudio
 flask-cors
 openai
 python-dotenv
-git+https://git@github.com/facebookresearch/audiocraft#egg=audiocraft
-
-
