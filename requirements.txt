@@ -5,4 +5,5 @@ torchaudio
 flask-cors
 openai
 python-dotenv
+audiocraft
 
