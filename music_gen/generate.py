@@ -30,6 +30,8 @@ class ChoiraGenerate:
         tensor = tensor / torch.max(torch.abs(tensor))
         sample_rate = 32000  # Replace with your actual sample rate
         file_name = self.generate_filename()
+        folder_path = "audios"
+        self.ensure_folder_exists(folder_path)
         torchaudio.save(f"audios/{file_name}", tensor, sample_rate)
         new_entry = {
             "user_prompt":original_prompt,"filename":file_name,"enchanted_prompt":enhanced_prompt
@@ -59,6 +61,11 @@ class ChoiraGenerate:
         ]
         )
         return completion.choices[0].message.content
+
+    def ensure_folder_exists(self,folder_path):
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+            print(f"Folder '{folder_path}' created.")
     
     def save_history(self,new_entry):
         try:
