@@ -2,12 +2,28 @@ from flask import Blueprint, jsonify,send_from_directory
 from flask import request
 import os
 import json
+from song_gen.song_gen from ChoiraSongGenerate
 # Create a Blueprint
 main = Blueprint('main', __name__)
 
 @main.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({"status": "API is running!"}), 200
+
+
+@main.route('/api/song-gen', methods=['POST'])
+def generate_song():
+
+    user_prompt = request.get_json()['user_promt']
+    print(f"user_prompt:{user_prompt}")
+    csongGen = ChoiraSongGenerate()
+    res = csongGen.generate_song(user_prompt)
+    return {
+        "status": 200,
+        "message": "Success",
+        "data": res
+    }
+
 
 @main.route('/api/audio-files', methods=['GET'])
 def audio_files():
