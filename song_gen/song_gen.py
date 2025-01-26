@@ -55,8 +55,8 @@ class ChoiraSongGenerate:
         response = requests.post(f"{url}{endpoint}", headers=headers, json=body)
         if response.status_code == 200:
             print("response")
-            print(response)
-            musicData = response.data[0]
+            print(response.json())
+            musicData = response.data[0] or response.json()
             return {
                 "audioUrl": musicData.audio_file,
                 "imageUrl": musicData.image_file,
