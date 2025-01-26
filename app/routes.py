@@ -17,18 +17,21 @@ def generate_song():
     user_prompt = request.get_json()['user_prompt']
     if(not user_prompt):
         return {
-            "status": 401,
+            "status": False,
             "message": "User prompt not provided",
             "data": res
         }
     print(f"user_prompt:{user_prompt}")
     csongGen = ChoiraSongGenerate()
     res = csongGen.generate_song(user_prompt)
-    return {
-        "status": 200,
-        "message": "Success",
-        "data": res
-    }
+    if(res):
+        return {
+            "status": True,
+            "message": "Success",
+            "data": res
+        }
+    else:
+        return {"status":False,"message":"Server error"}
 
 
 @main.route('/api/audio-files', methods=['GET'])

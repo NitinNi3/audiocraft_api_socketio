@@ -14,18 +14,19 @@ class ChoiraSongGenerate:
 
     def generate_song(self,prompt):
         print("SONG GENERATION STARTED...")
-        # get song url,download that song and store into the folder
         music_data = self.song_gen(prompt)
-        # file_name = self.generate_filename()
-        # folder_path = "audios"
-        # self.ensure_folder_exists(folder_path)
-        # new_entry = {
-        #     "user_prompt":prompt,"filename":file_name,"enchanted_prompt":""
-        # }
-        # self.save_history(new_entry)
-        # print(f"GENERATION FINISHED :) File saved as {file_name}")
-
-        return music_data
+        self.ensure_folder_exists(folder_path)
+        folder_path = "audios"
+        file_name1 = self.generate_filename()
+        file_name = os.path.join(folder_path, f"{file_name1}.mp3")
+        ack_status = self.download_and_store(music_data['audioUrl'],file_name)
+        if(ack_status):
+            new_entry = {"user_prompt":prompt,"filename":f"{file_name1}.mp3","enchanted_prompt":""}
+            self.save_history(new_entry)
+            print(f"GENERATION FINISHED :) File saved as {file_name1}")
+            return music_data
+        else:
+            return False
     
     def progress_callback(self,generated,to_generate):
         # hit socket event
@@ -34,7 +35,7 @@ class ChoiraSongGenerate:
 
     def generate_filename(self):
         timestamp = int(time.time())
-        return f"choira_gen_{timestamp}.wav"
+        return f"choira_gen_{timestamp}"
 
     def song_gen(self,user_prompt):
         url = os.environ.get("song_gen_url") or "https://api.topmediai.com/v1"
@@ -66,6 +67,23 @@ class ChoiraSongGenerate:
         else:
             print(f"Error: {response.status_code}")
 
+    
+    def download_and_store(self,url,file_name):
+        print("Downloading started")
+        try:
+            response = requests.get(url, stream=True)
+            response.raise_for_status()  # Raise an error for bad status codes
+            # Write the file to the specified folder
+            with open(file_name, "wb") as file:
+                for chunk in response.iter_content(chunk_size=1024):  # Download in chunks
+                    file.write(chunk)
+            print("Downloading Finished and stored the file")
+            return True
+
+        except Exception as e:
+            print("ERRRR",e)
+            return False
+        
     # def enhance_the_prompt(self,user_prompt):
     #     MODEL="gpt-4o-mini"
     #     client = OpenAI(api_key=os.environ.get("o_key"))
