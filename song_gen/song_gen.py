@@ -9,7 +9,7 @@ load_dotenv()
 
 class ChoiraSongGenerate:
     def __init__(self) -> None:
-        self.song_gen = "v1" # not in use
+        self.song_gen_version = "v1" # not in use
         
 
     def generate_song(self,prompt):

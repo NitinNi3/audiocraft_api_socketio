@@ -14,7 +14,13 @@ def health_check():
 @main.route('/api/song-gen', methods=['POST'])
 def generate_song():
 
-    user_prompt = request.get_json()['user_promt']
+    user_prompt = request.get_json()['user_prompt']
+    if(not user_prompt)
+    return {
+        "status": 401,
+        "message": "User prompt not provided",
+        "data": res
+    }
     print(f"user_prompt:{user_prompt}")
     csongGen = ChoiraSongGenerate()
     res = csongGen.generate_song(user_prompt)
