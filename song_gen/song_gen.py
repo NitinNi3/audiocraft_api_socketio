@@ -52,7 +52,7 @@ class ChoiraSongGenerate:
             "instrumental": 0,
         }
 
-        response = requests.post(f"{url}{endpoint}", headers=headers, json=body,timeout=40)
+        response = requests.post(f"{url}{endpoint}", headers=headers, json=body)
         if response.status_code == 200:
             print("response")
             print(response)
