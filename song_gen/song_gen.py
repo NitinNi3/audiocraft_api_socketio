@@ -15,8 +15,8 @@ class ChoiraSongGenerate:
     def generate_song(self,prompt):
         print("SONG GENERATION STARTED...")
         music_data = self.song_gen(prompt)
-        self.ensure_folder_exists(folder_path)
         folder_path = "audios"
+        self.ensure_folder_exists(folder_path)
         file_name1 = self.generate_filename()
         file_name = os.path.join(folder_path, f"{file_name1}.mp3")
         ack_status = self.download_and_store(music_data['audioUrl'],file_name)
