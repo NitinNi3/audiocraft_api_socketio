@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify,send_from_directory
 from flask import request
 import os
 import json
-from song_gen.song_gen from ChoiraSongGenerate
+from song_gen.song_gen import ChoiraSongGenerate
 # Create a Blueprint
 main = Blueprint('main', __name__)
 
