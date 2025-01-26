@@ -58,7 +58,7 @@ class ChoiraSongGenerate:
             print(response)
             print("response",response.json())
             print("response",response.json()["data"])
-            musicData = response.json()['data'][0]
+            musicData = response.json()["data"][0]
             return {
                 "audioUrl": musicData['audio_file'],
                 "imageUrl": musicData['image_file'],
