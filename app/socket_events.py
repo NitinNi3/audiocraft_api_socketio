@@ -1,5 +1,5 @@
 from flask_socketio import emit
-from app import socketio,choira_generate
+from app import socketio,choira_generate,choira_song_generate
 from flask import request
 
 @socketio.on('connect')
