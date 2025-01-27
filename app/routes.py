@@ -14,24 +14,24 @@ def health_check():
 @main.route('/api/song-gen', methods=['POST'])
 def generate_song():
 
-    user_prompt = request.get_json()['user_prompt']
-    if(not user_prompt):
-        return {
-            "status": False,
-            "message": "User prompt not provided",
-            "data": res
-        }
-    print(f"user_prompt:{user_prompt}")
-    csongGen = ChoiraSongGenerate()
-    res = csongGen.generate_song(user_prompt)
-    if(res):
-        return {
-            "status": True,
-            "message": "Success",
-            "data": res
-        }
-    else:
-        return {"status":False,"message":"Server error"}
+    # user_prompt = request.get_json()['user_prompt']
+    # if(not user_prompt):
+    #     return {
+    #         "status": False,
+    #         "message": "User prompt not provided",
+    #         "data": res
+    #     }
+    # print(f"user_prompt:{user_prompt}")
+    # csongGen = ChoiraSongGenerate()
+    # res = csongGen.generate_song(user_prompt)
+    # if(res):
+    #     return {
+    #         "status": True,
+    #         "message": "Success",
+    #         "data": res
+    #     }
+    # else:
+    return {"status":False,"message":"Not avaialable"}
 
 
 @main.route('/api/audio-files', methods=['GET'])

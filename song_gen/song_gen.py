@@ -8,11 +8,11 @@ load_dotenv()
 
 
 class ChoiraSongGenerate:
-    def __init__(self) -> None:
+    def __init__(self,socketio) -> None:
         self.song_gen_version = "v1" # not in use
         
 
-    def generate_song(self,prompt):
+    def generate_song(self,prompt,socket_id):
         print("SONG GENERATION STARTED...")
         music_data = self.song_gen(prompt)
         folder_path = "audios"
@@ -55,9 +55,7 @@ class ChoiraSongGenerate:
 
         response = requests.post(f"{url}{endpoint}", headers=headers, json=body)
         if response.status_code == 200:
-            print(response)
-            print("response",response.json())
-            print("response",response.json()["data"])
+            print("SONG GEN FINISHED.")
             musicData = response.json()["data"][0]
             return {
                 "audioUrl": musicData['audio_file'],

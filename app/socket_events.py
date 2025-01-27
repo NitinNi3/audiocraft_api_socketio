@@ -17,6 +17,16 @@ def generate_music_large(data):
     print(f"Received message: {data}")
     user_prompt = data['prompt']
     print("User prompt : ",user_prompt)
-    crisp_prompt  = f"A crisp and clear sounding {user_prompt}"
+    crisp_prompt  = f"{user_prompt}"
     file_name = choira_generate.generate_music_large(user_prompt,crisp_prompt,data['duration'],request.sid)
     emit('music_generated', {'file_name': file_name})
+
+
+@socketio.on('generate-song')
+def generate_song(data):
+    print(f"Received Song message: {data}")
+    user_prompt = data['prompt']
+    print("User prompt : ",user_prompt)
+    crisp_prompt  = f"A crisp and clear sounding {user_prompt}"
+    data = choira_song_generate.generate_song(user_prompt,request.sid)
+    emit('song_generated', {'data': data})
