@@ -23,6 +23,7 @@ class ChoiraSongGenerate:
         if(ack_status):
             new_entry = {"user_prompt":prompt,"filename":f"{file_name1}.mp3","enchanted_prompt":""}
             self.save_history(new_entry)
+            music_data["file_name"] = f"{file_name1}.mp3"
             print(f"GENERATION FINISHED :) File saved as {file_name1}")
             return music_data
         else:
